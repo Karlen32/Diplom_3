@@ -39,13 +39,13 @@ def logged_in_user(driver, api_user):
     main = MainPage(driver)
     login = LoginPage(driver)
 
-    base.open_main_page()
+    main.open_main_page()
     main.click_login_button()
     login.login(user_data["email"], user_data["password"])
 
     base.wait_for_url_not_contains(Urls.LOGIN_PAGE)
 
-    base.open_main_page()
+    main.open_main_page()
     main.main_page_loading_wait()
 
     return driver
@@ -67,13 +67,13 @@ def logged_in_feed_user(driver, feed_user_credentials):
     main = MainPage(driver)
     login = LoginPage(driver)
 
-    base.open_main_page()
+    main.open_main_page()
     main.click_login_button()
     login.login(user_data["email"], user_data["password"])
 
     base.wait_for_url_not_contains(Urls.LOGIN_PAGE)
 
-    base.open_main_page()
+    main.open_main_page()
     main.main_page_loading_wait()
 
     return driver

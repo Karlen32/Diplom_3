@@ -2,7 +2,6 @@ import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from seletools.actions import drag_and_drop
-from config.urls import Urls
 
 
 class BasePage:
@@ -10,10 +9,6 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
-
-    @allure.step("Открыть главную страницу")
-    def open_main_page(self):
-        self.driver.get(Urls.BASE_URL)
 
     @allure.step("Найти элемент")
     def find(self, locator):

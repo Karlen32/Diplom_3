@@ -7,6 +7,10 @@ from config.urls import Urls
 
 class MainPage(BasePage):
 
+    @allure.step("Открыть главную страницу")
+    def open_main_page(self):
+        self.driver.get(Urls.BASE_URL)
+
     @allure.step("Ждём загрузки главной страницы")
     def main_page_loading_wait(self):
         self.wait_for_element_hide(MainPageLocators.OVERLAY)
