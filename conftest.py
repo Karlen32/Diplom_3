@@ -35,7 +35,7 @@ def feed_user_credentials():
     }
 
 @pytest.fixture
-def logged_in_api_user(driver, api_user):
+def logged_in_user(driver, api_user):
     user_data, _ = api_user
     login_via_ui(
         driver,

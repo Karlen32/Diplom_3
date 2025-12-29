@@ -1,9 +1,10 @@
+from config.urls import Urls
 import requests
 import uuid
 
-BASE_URL = "https://stellarburgers.education-services.ru/api"
-
 class ApiUserHelper:
+
+    @staticmethod
     def create_user():
         payload = {
             "email": f"test_{uuid.uuid4()}@mail.ru",
@@ -11,12 +12,22 @@ class ApiUserHelper:
             "name": "Test User"
         }
 
-        response = requests.post(f"{BASE_URL}/auth/register", json=payload)
-        access_token = response.json()["accessToken"]
+        response = requests.post(
+            f"{Urls.BASE_URL}{Urls.API_PREFIX}{Urls.AUTH_REGISTER}",
+            json=payload
+        )
+        assert response.status_code == 200, response.text
 
+        access_token = response.json()["accessToken"]
         return payload, access_token
 
-
+    @staticmethod
     def delete_user(token):
         headers = {"Authorization": token}
-        requests.delete(f"{BASE_URL}/auth/user", headers=headers)
+
+        response = requests.delete(
+            f"{Urls.BASE_URL}{Urls.API_PREFIX}{Urls.AUTH_USER}",
+            headers=headers
+        )
+        return response.status_code
+

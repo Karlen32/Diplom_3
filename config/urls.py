@@ -8,3 +8,6 @@ class Urls:
     ORDER_HISTORY_PAGE = "/account/order-history"
     ORDER_FEED_PAGE = "/feed"
 
+    API_PREFIX = "/api"
+    AUTH_REGISTER = "/auth/register"
+    AUTH_USER = "/auth/user"
