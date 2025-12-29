@@ -4,12 +4,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-
-from pages.base_page import BasePage
-from pages.main_page import MainPage
-from pages.login_page import LoginPage
+from helpers.login_helper import login_via_ui
 from helpers.api_user_helper import ApiUserHelper
-from config.urls import Urls
 from config.utils import Utils
 
 @pytest.fixture(params=["chrome", "firefox"])
@@ -31,26 +27,6 @@ def api_user():
     ApiUserHelper.delete_user(token)
 
 
-@pytest.fixture
-def logged_in_user(driver, api_user):
-    user_data, _ = api_user
-
-    base = BasePage(driver)
-    main = MainPage(driver)
-    login = LoginPage(driver)
-
-    main.open_main_page()
-    main.click_login_button()
-    login.login(user_data["email"], user_data["password"])
-
-    base.wait_for_url_not_contains(Urls.LOGIN_PAGE)
-
-    main.open_main_page()
-    main.main_page_loading_wait()
-
-    return driver
-
-
 @pytest.fixture(scope="session")
 def feed_user_credentials():
     return {
@@ -58,22 +34,25 @@ def feed_user_credentials():
         "password": Utils.PASSWORD
     }
 
+@pytest.fixture
+def logged_in_api_user(driver, api_user):
+    user_data, _ = api_user
+    login_via_ui(
+        driver,
+        user_data["email"],
+        user_data["password"]
+    )
+    return driver
+
 
 @pytest.fixture
 def logged_in_feed_user(driver, feed_user_credentials):
-    user_data = feed_user_credentials
-
-    base = BasePage(driver)
-    main = MainPage(driver)
-    login = LoginPage(driver)
-
-    main.open_main_page()
-    main.click_login_button()
-    login.login(user_data["email"], user_data["password"])
-
-    base.wait_for_url_not_contains(Urls.LOGIN_PAGE)
-
-    main.open_main_page()
-    main.main_page_loading_wait()
-
+    login_via_ui(
+        driver,
+        feed_user_credentials["email"],
+        feed_user_credentials["password"]
+    )
     return driver
+
+
+
