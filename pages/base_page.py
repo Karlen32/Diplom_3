@@ -50,3 +50,15 @@ class BasePage:
     @allure.step("Получить текст элемента")
     def get_text(self, locator):
         return self.find(locator).text
+
+    @allure.step("Получить текущий URL")
+    def get_current_url(self):
+        return self.driver.current_url
+
+    @allure.step("Проверить, что URL содержит часть")
+    def is_url_contains(self, url_part):
+        return url_part in self.get_current_url()
+
+    @allure.step("Проверить, что элемент является активным")
+    def is_element_active(self, element):
+        return element == self.driver.switch_to.active_element

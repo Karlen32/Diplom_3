@@ -15,7 +15,7 @@ class TestMainNavigation:
         main.click_orders_feed_link()
         main.click_constructor_link()
 
-        assert Urls.BASE_URL in driver.current_url
+        assert main.is_url_contains(Urls.BASE_URL)
 
     @allure.title("Переход по клику на «Лента заказов»")
     def test_go_to_orders_feed(self, driver):
@@ -25,7 +25,7 @@ class TestMainNavigation:
         main.main_page_loading_wait()
         main.click_orders_feed_link()
 
-        assert Urls.ORDER_FEED_PAGE in driver.current_url
+        assert main.is_url_contains(Urls.ORDER_FEED_PAGE)
 
     @allure.title("При клике на ингредиент открывается модалка")
     def test_ingredient_modal_opens(self, driver):
@@ -58,8 +58,8 @@ class TestMainNavigation:
         main.add_first_ingredient_to_basket()
         main.wait_for_ingredient_counter_not_zero()
 
-        counter = main.find_ingredient_counter_value()
-        assert int(counter.text) > 0
+        counter_text = main.get_text(MainPageLocators.INGREDIENT_COUNTER_VALUE)
+        assert int(counter_text) > 0
 
     @allure.title("Залогиненный пользователь может оформить заказ")
     def test_logged_in_user_can_create_order(self, logged_in_user):

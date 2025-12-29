@@ -16,7 +16,7 @@ class TestPasswordRecovery:
         main.click_login_button()
         login.click_forgot_password_link()
 
-        assert Urls.FORGOT_PASSWORD_PAGE in driver.current_url
+        assert login.is_url_contains(Urls.FORGOT_PASSWORD_PAGE)
 
     @allure.title("Ввод почты и клик по кнопке «Восстановить»")
     def test_enter_email_and_click_restore(self, driver):
@@ -30,7 +30,7 @@ class TestPasswordRecovery:
         forgot.enter_email("test@mail.ru")
         forgot.click_restore_button()
 
-        assert Urls.RESET_PASSWORD_PAGE in driver.current_url
+        assert forgot.is_url_contains(Urls.RESET_PASSWORD_PAGE)
 
     @allure.title("Кнопка показать/скрыть пароль делает поле активным")
     def test_password_visibility_button_activates_input(self, driver):
@@ -47,4 +47,4 @@ class TestPasswordRecovery:
         password_input = forgot.get_password_input()
         forgot.click_password_visibility_button()
 
-        assert password_input == driver.switch_to.active_element
+        assert forgot.is_element_active(password_input)

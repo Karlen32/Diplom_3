@@ -14,7 +14,7 @@ class TestProfile:
         main.main_page_loading_wait()
         main.click_account_button()
 
-        assert Urls.PROFILE_PAGE in driver.current_url
+        assert main.is_url_contains(Urls.PROFILE_PAGE)
 
     @allure.title("Переход в историю заказов")
     def test_go_to_order_history_page(self, logged_in_user):
@@ -25,7 +25,7 @@ class TestProfile:
         main.click_account_button()
         profile.click_order_history_link()
 
-        assert Urls.ORDER_HISTORY_PAGE in driver.current_url
+        assert profile.is_url_contains(Urls.ORDER_HISTORY_PAGE)
 
     @allure.title("Выход из аккаунта")
     def test_logout(self, logged_in_user):
@@ -36,4 +36,4 @@ class TestProfile:
         main.click_account_button()
         profile.click_logout_button()
 
-        assert Urls.LOGIN_PAGE in driver.current_url
+        assert profile.is_url_contains(Urls.LOGIN_PAGE)
