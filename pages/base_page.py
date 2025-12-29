@@ -42,3 +42,11 @@ class BasePage:
     @allure.step("Перетащить элемент")
     def drag_and_drop_element(self, source, target):
         drag_and_drop(self.driver, source, target)
+
+    @allure.step("Ожидаем выполнения условия")
+    def wait_until(self, condition, timeout=10):
+        WebDriverWait(self.driver, timeout).until(condition)
+
+    @allure.step("Получить текст элемента")
+    def get_text(self, locator):
+        return self.find(locator).text

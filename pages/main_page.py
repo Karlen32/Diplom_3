@@ -55,10 +55,13 @@ class MainPage(BasePage):
 
     @allure.step("Ждём, пока счетчик ингредиентов увеличится")
     def wait_for_ingredient_counter_not_zero(self, timeout=10):
-        WebDriverWait(self.driver, timeout).until(
-            lambda d: int(
-                d.find_element(*MainPageLocators.INGREDIENT_COUNTER_VALUE).text or 0
-            ) > 0
+        self.wait_until(
+            lambda _: int(
+                self.get_text(
+                    MainPageLocators.INGREDIENT_COUNTER_VALUE
+                ) or 0
+            ) > 0,
+            timeout=timeout
         )
 
     @allure.step("Получить значение счетчика ингредиентов")
