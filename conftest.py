@@ -27,13 +27,6 @@ def api_user():
     ApiUserHelper.delete_user(token)
 
 
-@pytest.fixture(scope="session")
-def feed_user_credentials():
-    return {
-        "email": Utils.EMAIL,
-        "password": Utils.PASSWORD
-    }
-
 @pytest.fixture
 def logged_in_user(driver, api_user):
     user_data, _ = api_user
@@ -46,11 +39,11 @@ def logged_in_user(driver, api_user):
 
 
 @pytest.fixture
-def logged_in_feed_user(driver, feed_user_credentials):
+def logged_in_feed_user(driver):
     login_via_ui(
         driver,
-        feed_user_credentials["email"],
-        feed_user_credentials["password"]
+        Utils.EMAIL,
+        Utils.PASSWORD
     )
     return driver
 

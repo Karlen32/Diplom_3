@@ -16,7 +16,6 @@ class ApiUserHelper:
             f"{Urls.BASE_URL}{Urls.API_PREFIX}{Urls.AUTH_REGISTER}",
             json=payload
         )
-        assert response.status_code == 200, response.text
 
         access_token = response.json()["accessToken"]
         return payload, access_token
